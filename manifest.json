@@ -1,0 +1,19 @@
+{
+  "name": "Undangan Pernikahan",
+  "short_name": "Undangan",
+  "description": "Kirim undangan pernikahan via WhatsApp dengan mudah",
+  "start_url": "/Aplikasi-wahyu/",
+  "scope": "/Aplikasi-wahyu/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f9f4ee",
+  "theme_color": "#b8975a",
+  "icons": [
+    {
+      "src": "logo-undangan.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
