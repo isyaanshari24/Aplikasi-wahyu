@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kirim Undangan Nikah</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #f9f4ee;
+    --warm: #e8ddd0;
+    --gold: #b8975a;
+    --gold-light: #d4b483;
+    --dark: #2c2418;
+    --text: #4a3f32;
+    --muted: #8a7d6e;
+    --green-wa: #25D366;
+    --green-wa-dark: #128C7E;
+    --shadow: 0 4px 24px rgba(44,36,24,0.10);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0 0 48px 0;
+    color: var(--text);
+  }
+
+  /* Header */
+  .header {
+    width: 100%;
+    background: linear-gradient(135deg, #2c2418 0%, #4a3525 60%, #6b4c30 100%);
+    padding: 36px 24px 28px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .header::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 160px; height: 160px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(184,151,90,0.18) 0%, transparent 70%);
+  }
+  .header::after {
+    content: '';
+    position: absolute;
+    bottom: -30px; left: -30px;
+    width: 120px; height: 120px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(184,151,90,0.12) 0%, transparent 70%);
+  }
+  .header-bismillah {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 13px;
+    letter-spacing: 2px;
+    color: var(--gold-light);
+    opacity: 0.8;
+    margin-bottom: 8px;
+  }
+  .header h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+  }
+  .header h1 span {
+    color: var(--gold-light);
+  }
+  .header-sub {
+    font-size: 12px;
+    color: rgba(255,255,255,0.5);
+    margin-top: 6px;
+    letter-spacing: 1px;
+    font-weight: 300;
+  }
+
+  /* Ornament divider */
+  .ornament {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0 auto 0;
+    width: 100%;
+    max-width: 480px;
+    padding: 0 24px;
+  }
+  .ornament-line { flex: 1; height: 1px; background: var(--gold); opacity: 0.3; }
+  .ornament-diamond {
+    width: 8px; height: 8px;
+    background: var(--gold);
+    transform: rotate(45deg);
+    opacity: 0.6;
+  }
+
+  /* Card */
+  .card {
+    background: #fff;
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+    padding: 28px 24px;
+    margin: 24px 16px 0;
+    width: calc(100% - 32px);
+    max-width: 480px;
+    border: 1px solid rgba(184,151,90,0.12);
+  }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+
+  /* Input */
+  .input-wrap {
+    position: relative;
+    margin-bottom: 14px;
+  }
+  .input-wrap input {
+    width: 100%;
+    padding: 14px 16px 14px 42px;
+    border: 1.5px solid var(--warm);
+    border-radius: 12px;
+    font-size: 15px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--dark);
+    background: var(--cream);
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .input-wrap input:focus {
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(184,151,90,0.12);
+    background: #fff;
+  }
+  .input-wrap input::placeholder { color: var(--muted); }
+  .input-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 17px;
+    pointer-events: none;
+  }
+
+  /* Partner toggle group */
+  .partner-label {
+    font-size: 12px;
+    color: var(--muted);
+    margin-bottom: 10px;
+    font-weight: 400;
+  }
+  .toggle-group {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 6px;
+  }
+  .toggle-btn {
+    padding: 7px 14px;
+    border-radius: 20px;
+    border: 1.5px solid var(--warm);
+    background: #fff;
+    font-size: 13px;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.18s;
+    font-weight: 400;
+  }
+  .toggle-btn:hover {
+    border-color: var(--gold-light);
+    color: var(--gold);
+  }
+  .toggle-btn.active {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: #fff;
+    font-weight: 500;
+    box-shadow: 0 2px 8px rgba(184,151,90,0.25);
+  }
+
+  /* Keluarga row */
+  .keluarga-row {
+    display: none;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+    padding: 10px 14px;
+    background: rgba(184,151,90,0.07);
+    border-radius: 10px;
+    border: 1px dashed rgba(184,151,90,0.3);
+  }
+  .keluarga-row.visible { display: flex; }
+  .keluarga-row label {
+    font-size: 13px;
+    color: var(--text);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .keluarga-row input[type=checkbox] {
+    accent-color: var(--gold);
+    width: 16px;
+    height: 16px;
+  }
+
+  /* Preview */
+  .preview-card {
+    background: linear-gradient(135deg, #e5fbe9 0%, #dcf8e1 100%);
+    border-radius: 14px;
+    padding: 18px 16px;
+    margin-top: 4px;
+    border: 1px solid rgba(37,211,102,0.2);
+    position: relative;
+  }
+  .preview-card::before {
+    content: '📋 Preview Pesan';
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 1.5px;
+    color: var(--green-wa-dark);
+    text-transform: uppercase;
+    display: block;
+    margin-bottom: 10px;
+  }
+  .preview-text {
+    font-size: 13px;
+    line-height: 1.75;
+    color: #1a1a1a;
+    white-space: pre-wrap;
+    word-break: break-word;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .preview-text .highlight-name {
+    color: var(--green-wa-dark);
+    font-weight: 600;
+  }
+
+  /* Input nomor */
+  .phone-note {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 6px;
+    line-height: 1.5;
+  }
+
+  /* Send button */
+  .btn-send {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--green-wa) 0%, var(--green-wa-dark) 100%);
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    font-size: 16px;
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    box-shadow: 0 4px 16px rgba(37,211,102,0.3);
+    transition: all 0.2s;
+    letter-spacing: 0.3px;
+    margin-top: 4px;
+  }
+  .btn-send:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(37,211,102,0.4);
+  }
+  .btn-send:active { transform: translateY(0); }
+  .btn-send:disabled {
+    background: var(--warm);
+    color: var(--muted);
+    box-shadow: none;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--warm), transparent);
+    margin: 20px 0;
+  }
+
+  /* Footer */
+  .footer {
+    margin-top: 28px;
+    text-align: center;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.5px;
+  }
+  .footer span { color: var(--gold); }
+
+  /* Ripple animation untuk btn */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .card { animation: fadeInUp 0.4s ease both; }
+  .card:nth-child(2) { animation-delay: 0.08s; }
+  .card:nth-child(3) { animation-delay: 0.16s; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-bismillah">The Wedding Wahyu & Nurina </div>
+  <h1>Kirim Undangan <span>Pernikahan</span></h1>
+  <div class="header-sub">via WhatsApp · Otomatis & Personal</div>
+</div>
+
+<!-- Card 1: Nama tamu -->
+<div class="card">
+  <div class="section-label">👤 Data Tamu</div>
+
+  <div class="input-wrap">
+    <span class="input-icon">✍️</span>
+    <input type="text" id="namaTamu" placeholder="Nama tamu (contoh: Budi)" oninput="updatePreview()" />
+  </div>
+
+  <div class="partner-label">Tambahkan pasangan / keluarga:</div>
+  <div class="toggle-group">
+    <button class="toggle-btn active" onclick="setPartner(this, '& partner')">& Partner</button>
+    <button class="toggle-btn" onclick="setPartner(this, '& suami')">& Suami</button>
+    <button class="toggle-btn" onclick="setPartner(this, '& istri')">& Istri</button>
+    <button class="toggle-btn" onclick="setPartner(this, '')">Sendiri</button>
+  </div>
+
+  <div class="keluarga-row" id="keluargaRow">
+    <input type="checkbox" id="keluargaCheck" onchange="updatePreview()" />
+    <label for="keluargaCheck">Tambahkan <strong>sekeluarga</strong></label>
+  </div>
+
+  <div class="input-wrap" style="margin-top:16px;">
+    <span class="input-icon">📱</span>
+    <input type="tel" id="nomorWA" placeholder="Nomor WA tamu (contoh: 08123456789)" oninput="updatePreview()" />
+  </div>
+  <div class="phone-note">⚠️ Isi nomor WA untuk kirim langsung. Kosongkan jika ingin copy manual.</div>
+</div>
+
+<!-- Card 2: Preview -->
+<div class="card">
+  <div class="section-label">📨 Preview Pesan</div>
+  <div class="preview-card">
+    <div class="preview-text" id="previewText">—</div>
+  </div>
+</div>
+
+<!-- Card 3: Kirim -->
+<div class="card">
+  <button class="btn-send" id="btnKirim" onclick="kirimWA()">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+    </svg>
+    Kirim via WhatsApp
+  </button>
+</div>
+
+<div class="footer">Dibuat dengan ❤️ · <span>Undangan Pernikahan</span></div>
+
+<script>
+  let selectedPartner = '& partner';
+
+  const BASE_URL = 'https://isyaanshari24.github.io/Wedding-invitation-/?to=';
+
+  function setPartner(btn, val) {
+    document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    selectedPartner = val;
+
+    // Tampilkan opsi sekeluarga jika ada pasangan
+    const keluargaRow = document.getElementById('keluargaRow');
+    if (val && val !== '') {
+      keluargaRow.classList.add('visible');
+    } else {
+      keluargaRow.classList.remove('visible');
+      document.getElementById('keluargaCheck').checked = false;
+    }
+
+    updatePreview();
+  }
+
+  function buildNamaLengkap() {
+    const nama = document.getElementById('namaTamu').value.trim();
+    if (!nama) return '';
+
+    let namaLengkap = nama;
+    if (selectedPartner) {
+      namaLengkap += ' ' + selectedPartner;
+    }
+
+    const keluarga = document.getElementById('keluargaCheck').checked;
+    if (keluarga && selectedPartner) {
+      namaLengkap += ' sekeluarga';
+    }
+
+    return namaLengkap;
+  }
+
+  function buildLink(namaLengkap) {
+    if (!namaLengkap) return BASE_URL + 'Tamu+Undangan';
+    return BASE_URL + encodeURIComponent(namaLengkap);
+  }
+
+  function buildPesan(namaLengkap) {
+    const link = buildLink(namaLengkap);
+    const sapaan = namaLengkap || 'Bapak/Ibu/Saudara/i';
+
+    return `Assalamu'alaikum Wr. Wb.
+
+Dengan penuh rasa hormat, kami bermaksud mengundang ${sapaan} untuk berkenan hadir pada acara pernikahan kami.
+
+Berikut kami lampirkan undangan digital melalui tautan berikut:
+${link}
+
+Kehadiran serta doa restu dari ${sapaan} akan menjadi kebahagiaan dan kehormatan bagi kami.
+
+Atas perhatian dan kehadirannya, kami ucapkan terima kasih.
+
+Wassalamu'alaikum Wr. Wb.`;
+  }
+
+  function updatePreview() {
+    const namaLengkap = buildNamaLengkap();
+    const pesan = buildPesan(namaLengkap);
+
+    // Render preview dengan highlight nama
+    const previewEl = document.getElementById('previewText');
+    if (namaLengkap) {
+      const escaped = pesan.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+      const highlighted = escaped.replace(
+        new RegExp(namaLengkap.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'), 'g'),
+        `<span class="highlight-name">${namaLengkap}</span>`
+      );
+      previewEl.innerHTML = highlighted;
+    } else {
+      previewEl.textContent = pesan;
+    }
+
+    // Enable/disable tombol kirim
+    const nomor = document.getElementById('nomorWA').value.trim();
+    const btnKirim = document.getElementById('btnKirim');
+    // Tombol selalu bisa diklik, redirect ke wa.me
+    btnKirim.disabled = false;
+  }
+
+  function kirimWA() {
+    const namaLengkap = buildNamaLengkap();
+    const pesan = buildPesan(namaLengkap);
+    let nomor = document.getElementById('nomorWA').value.trim();
+
+    // Format nomor: 08xxx → 628xxx
+    nomor = nomor.replace(/\D/g, '');
+    if (nomor.startsWith('0')) nomor = '62' + nomor.slice(1);
+    if (nomor.startsWith('8')) nomor = '62' + nomor;
+
+    let waUrl;
+    if (nomor.length > 8) {
+      waUrl = `https://wa.me/${nomor}?text=${encodeURIComponent(pesan)}`;
+    } else {
+      // Tanpa nomor → buka WA pilih kontak sendiri
+      waUrl = `https://wa.me/?text=${encodeURIComponent(pesan)}`;
+    }
+
+    window.open(waUrl, '_blank');
+  }
+
+  // Init
+  updatePreview();
+</script>
+</body>
+</html>
