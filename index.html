@@ -404,7 +404,6 @@
     const namaLengkap = buildNamaLengkap();
     pesanFinal = buildPesan(namaLengkap);
     const previewEl = document.getElementById('previewText');
-    const btnShare = document.getElementById('btnShare');
     const btnCopy = document.getElementById('btnCopy');
     const hint = document.getElementById('hintText');
 
@@ -418,9 +417,8 @@
       const linkEsc2 = linkEsc.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
       html = html.replace(new RegExp(linkEsc2, 'g'), `<span class="hl-link">${linkEsc}</span>`);
       previewEl.innerHTML = html;
-      btnShare.disabled = false;
       btnCopy.disabled = false;
-      hint.innerHTML = `WA terbuka → <span>pilih kontak</span> → kirim ✓`;
+      hint.innerHTML = `Pesan siap disalin ✓`;
     } else {
       previewEl.textContent = 'Isi nama tamu di atas untuk melihat preview pesan...';
       btnCopy.disabled = true;
